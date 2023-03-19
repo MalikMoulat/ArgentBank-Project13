@@ -1,16 +1,12 @@
 import React from 'react'
 import './featureItem.css'
-import icon from '../../assets/img/icon-chat.png'
 
-function FeatureItem(){
+function FeatureItem({ featureIcon, featureTitle, featureText }){
     return(
         <div className="feature-item">
-        <img src={icon} alt="Chat Icon" className="feature-icon" />
-        <h3 className="feature-item-title">You are our #1 priority</h3>
-        <p>
-          Need to talk to a representative? You can get in touch through our
-          24/7 chat or through a phone call in less than 5 minutes.
-        </p>
+        <img src={featureIcon} alt="Chat Icon" className="feature-icon" />
+        <h3 className="feature-item-title">{featureTitle}</h3>
+        <p>{featureText}</p>
       </div>
     )
 }
