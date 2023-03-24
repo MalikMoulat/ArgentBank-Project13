@@ -12,7 +12,7 @@ function UserPage() {
             <Header />
             <main className="main bg-dark account-item-wrap">
                 <UserHeader />
-                <h2 class="sr-only">Accounts</h2>
+                <h2 className="sr-only">Accounts</h2>
                 <Account
                     accountTitle="Argent Bank Checking (x8349)"
                     accountAmont="$2,082,79"
