@@ -1,4 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import axios from "axios"
+
 import './userpage.css'
 
 import Header from "../../components/Header/header"
@@ -6,7 +9,40 @@ import Footer from "../../components/Footer/footer"
 import UserHeader from "../../components/UserHeader/userheader"
 import Account from "../../components/Account/account"
 
+import { getUserData } from "../../feature/reducer"
+
 function UserPage() {
+
+    //Ajouter connecte redux
+    const user = useSelector(state => state.user)
+    console.log('USER PAGE :',user)
+
+    const dispatch = useDispatch()
+    const token = user.token
+
+    const [userData, setUserData] = useState()
+    
+
+    const fetchData = async ( token, setVar ) => {
+
+        return axios({
+            method: 'post',
+            url: "http://localhost:3001/api/v1/user/profile",
+            headers: {
+                Authorization: `Bearer ${token}`,
+              },
+        }).then(result => {
+                console.log(result.data.body)
+
+                dispatch(getUserData(result.data.body))
+                setVar(result.data.body)
+                
+            }
+        ).catch(error => { console.error(error); return Promise.reject(error); })
+    }
+
+    // fetchData(token, setUserData)
+
     return(
         <React.Fragment>
             <Header />
