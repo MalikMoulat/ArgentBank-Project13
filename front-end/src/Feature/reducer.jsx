@@ -18,12 +18,16 @@ const userReducers = createSlice({
         },
         getTokenUser: (state, action) => {
             state.token = action.payload
+        },
+        updateUserName: (state, action) => {
+            state.firstName = action.payload.firstName
+            state.lastName = action.payload.lastName
         }
 
     }
 })
 
-export const { getUserData, getTokenUser } = userReducers.actions
+export const { getUserData, getTokenUser, updateUserName } = userReducers.actions
 
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import axios from "axios"
 
@@ -21,6 +21,7 @@ function UserPage() {
     const token = user.token
 
     const [userData, setUserData] = useState()
+
     
 
     const fetchData = async ( token, setVar ) => {
@@ -41,7 +42,9 @@ function UserPage() {
         ).catch(error => { console.error(error); return Promise.reject(error); })
     }
 
-    // fetchData(token, setUserData)
+    useEffect(() => {
+        fetchData(token, setUserData)
+    }, [])
 
     return(
         <React.Fragment>
