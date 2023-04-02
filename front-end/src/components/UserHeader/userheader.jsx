@@ -17,16 +17,15 @@ function UserHeader(){
 
     const [firstName, setfirstName] = useState()
     const [lastName, setLastName] = useState()
+    const [updateNameForm, setUpdateNameForm] = useState(false)
 
 
     const openModal = () => {
-        const modal = document.getElementById('update_name_modal_wrapper')
-        modal.style.display = 'block'
+        setUpdateNameForm(true)
     }
 
     const closeModal = () => {
-        const modal = document.getElementById('update_name_modal_wrapper')
-        modal.style.display = 'none'
+        setUpdateNameForm(false)
     }
 
     const updateName = (e) => {
@@ -38,7 +37,6 @@ function UserHeader(){
             "lastName": lastName
             }
 
-            dispatch(updateUserName(newUserName))
 
             axios({
             method: 'put',
@@ -49,15 +47,8 @@ function UserHeader(){
             data: newUserName
             }).then(result => {
                 console.log(result)
-    
 
-                // if(result.data.body.token){
-                //     console.log('TOKEN OK')
-                //     // navigate('/user')
-        
-                // }else{
-                //     console.log('NO TOKEN')
-                // }
+                dispatch(updateUserName(newUserName))
     
             }
             ).catch(error => { console.error(error); return Promise.reject(error); })
@@ -66,42 +57,62 @@ function UserHeader(){
             
     }
 
-    return(
-        <React.Fragment>
-            <div className="header">
-                <h1>Welcome back</h1>
 
-                <div id="userName">
-                    <h2>{user.firstName} {user.lastName}</h2>
-                </div>
-                <p>{user.token}</p>
-                <button id="editName" className="edit-button" onClick={openModal} >Edit Name</button>
-            </div>
-            <div id="update_name_modal_wrapper" className="update_name_modal_wrapper" >
-                <div id="update_name_modal" className="update_name_modal">
-                    <form>
+
+
+
+
+
+    return updateNameForm ? (
+        <React.Fragment>
+            <div id="update_name_modal" className="update_name_modal">
+                <h1>Welcome back</h1>
+                <form>
+                    <div className="input-wrapper-name">
                         <div className="input-wrapper">
-                            <label htmlFor="update_firstName" placeholder="First name" >First name</label>
+                            <label htmlFor="update_firstName" ></label>
                             <input 
                                 type="text" 
                                 id="update_firstName"
                                 onChange={(e) => setfirstName(e.target.value)}
+                                required
+                                placeholder={user.firstName}
+                                
                             >    
                             </input>
                         </div>
                         <div className="input-wrapper">
-                            <label htmlFor="update_lastName">Last name</label>
+                            <label htmlFor="update_lastName"></label>
                             <input 
                                 type="text" 
                                 id="update_lastName"
                                 onChange={(e) => setLastName(e.target.value)}
+                                required
+                                placeholder={user.lastName}
+                                
                             >
                             </input>
                         </div>
-                        <button className="sign-in-button" onClick={updateName}
-                                >Mettre à ajour mon nom</button>
-                    </form>
-                </div>
+                    </div>
+                    <div className="wrapper-button-updtae-name">
+                        <button className="button-updtae-name" onClick={updateName}
+                                >Save</button>
+                        <button className="button-updtae-name" onClick={closeModal}
+                                >Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </React.Fragment>
+
+    ) : (
+        <React.Fragment>
+        <div className="header">
+            <h1>Welcome back</h1>
+
+            <div id="userName">
+                <h2>{user.firstName} {user.lastName}</h2>
+            </div>
+                <button id="editName" className="edit-button" onClick={openModal} >Edit Name</button>
             </div>
         </React.Fragment>
     )

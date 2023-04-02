@@ -32,3 +32,12 @@
     max-width: 100%;
     width: 200px;
   }
+
+  .main-nav-button{
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-margin{
+    margin: 0 10px;
+  }

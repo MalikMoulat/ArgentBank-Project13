@@ -8,7 +8,27 @@ function Header() {
 
   const user = useSelector(state => state.user)
 
-console.log('header :', user)
+  console.log('header :', user)
+
+  const userConnected = (data) => {
+    if (data.length > 3){
+
+      return  <React.Fragment>
+                  <i className="fa fa-user-circle"></i>
+                  <p className='nav-margin'>{user.firstName} {user.lastName}</p>
+                  <a>
+                  <i className="fa fa-right-from-bracket"></i>
+                    Sign Out</a>
+              </React.Fragment>
+    } 
+    return  <React.Fragment>
+              <a className="main-nav-item" href="/sing-in">
+              <i className="fa fa-user-circle"></i>
+                Sign In
+              </a>
+            </React.Fragment>
+  }
+
   
     return(
         <nav className="main-nav">
@@ -20,12 +40,8 @@ console.log('header :', user)
           />
           <h1 className="sr-only">Argent Bank</h1>
         </a>
-        <div>
-          <p>{user.firstName} {user.lastName}</p>
-          <a className="main-nav-item" href="/sing-in">
-            <i className="fa fa-user-circle"></i>
-            Sign In
-          </a>
+        <div className='main-nav-button' >
+          {userConnected(user.id)}
         </div>
       </nav>
     )
