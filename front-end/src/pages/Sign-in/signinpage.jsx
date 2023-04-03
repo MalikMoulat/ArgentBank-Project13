@@ -31,7 +31,7 @@ function SignInPage(){
 
 
     const user = useSelector(state => state.user)
-    console.log('STORE login page :', user)
+    // console.log('STORE login page :', user)
 
     // dispatch(getTokenUser(token))
     const userLogin2 = {
@@ -55,6 +55,8 @@ function SignInPage(){
     
                 setVar(result.data.body.token)
                 dispatch(getTokenUser(result.data.body.token))
+
+                window.localStorage.setItem('TOKEN', result.data.body.token)
 
                 if(result.data.body.token){
                     console.log('TOKEN OK')
@@ -80,8 +82,6 @@ function SignInPage(){
         <React.Fragment>
             <Header />
             <main className='main bg-dark wrap-sign-form'>
-                <h3>{user.firstName} {user.lastName}</h3>
-                <p>{user.token}</p>
                 <section className="sign-in-content">
             <i className="fa fa-user-circle sign-in-icon"></i>
             <h1>Sign In</h1>

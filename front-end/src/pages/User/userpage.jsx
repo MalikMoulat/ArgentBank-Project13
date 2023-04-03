@@ -9,18 +9,20 @@ import Footer from "../../components/Footer/footer"
 import UserHeader from "../../components/UserHeader/userheader"
 import Account from "../../components/Account/account"
 
-import { getUserData } from "../../feature/reducer"
+import { getUserData, getTokenUser } from "../../feature/reducer"
 
 function UserPage() {
 
     //Ajouter connecte redux
     const user = useSelector(state => state.user)
-    console.log('USER PAGE :',user)
+    // console.log('USER PAGE :',user)
 
     const dispatch = useDispatch()
     const token = user.token
+    const tokenStorage = window.localStorage.getItem('TOKEN')
 
     const [userData, setUserData] = useState()
+    const [userToken, setUserToken] = useState()
 
     
 
@@ -43,7 +45,8 @@ function UserPage() {
     }
 
     useEffect(() => {
-        fetchData(token, setUserData)
+        fetchData(tokenStorage, setUserData)
+        dispatch(getTokenUser(tokenStorage))
     }, [])
 
     return(

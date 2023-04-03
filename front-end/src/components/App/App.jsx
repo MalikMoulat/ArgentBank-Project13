@@ -10,22 +10,24 @@ import login from '../../Api/api'
 import userReducers from "../../feature/reducer"
 import store from '../../store/store'
 
+
+
+
 // console.log(userReducers)
 // console.log('STORE :', store)
 
 function App() {
     return(
         <Provider store={store}>
-            <React.Fragment>
-                <Router>
-                    
-                    <Routes>
-                        <Route path='/' element={<HomePage />} />
-                        <Route path='/sing-in' element={<SignInPage />} />
-                        <Route path='/user' element={<UserPage />} />
-                    </Routes>
-                </Router>
-            </React.Fragment>
+                <React.Fragment>
+                    <Router>
+                        <Routes>
+                            <Route path='/' element={<HomePage />} />
+                            <Route path='/sing-in' element={<SignInPage />} />
+                            <Route path='/user' element={<UserPage />} />
+                        </Routes>
+                    </Router>
+                </React.Fragment>
         </Provider>
     )
 }

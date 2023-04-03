@@ -3,12 +3,25 @@ import './header.css'
 import logo from '../../assets/img/argentBankLogo.png'
 
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { resetState } from '../../feature/reducer'
+import { useDispatch } from 'react-redux'
+
 
 function Header() {
 
   const user = useSelector(state => state.user)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  console.log('header :', user)
+  // console.log('header :', user)
+
+  const signOut = () => {
+    localStorage.clear()
+    navigate("/sing-in")
+    dispatch(resetState())
+  }
+
 
   const userConnected = (data) => {
     if (data.length > 3){
@@ -16,7 +29,7 @@ function Header() {
       return  <React.Fragment>
                   <i className="fa fa-user-circle"></i>
                   <p className='nav-margin'>{user.firstName} {user.lastName}</p>
-                  <a>
+                  <a onClick={signOut}>
                   <i className="fa fa-right-from-bracket"></i>
                     Sign Out</a>
               </React.Fragment>

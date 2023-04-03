@@ -4,8 +4,8 @@ const userReducers = createSlice({
     name: "login",
     initialState: {
         email: "",
-        firstName: "Malik",
-        lastName: "Moulat",
+        firstName: "",
+        lastName: "",
         id: "",
         token: ""
     },
@@ -22,12 +22,19 @@ const userReducers = createSlice({
         updateUserName: (state, action) => {
             state.firstName = action.payload.firstName
             state.lastName = action.payload.lastName
+        },
+        resetState: (state) => {
+            state.email = ""
+            state.firstName = ""
+            state.lastName = ""
+            state.id = ""
+            state.token = ""
         }
 
     }
 })
 
-export const { getUserData, getTokenUser, updateUserName } = userReducers.actions
+export const { getUserData, getTokenUser, updateUserName, resetState } = userReducers.actions
 
 
 
