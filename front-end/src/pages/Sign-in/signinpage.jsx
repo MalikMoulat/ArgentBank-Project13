@@ -24,6 +24,8 @@ function SignInPage(){
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    
+
     const [token, setToken] = useState('')
     const [userData, setUserData] = useState('')
     const [userEmail, setUserEmail] = useState('')
@@ -43,6 +45,8 @@ function SignInPage(){
 
     const fetchToken = async ( userLogin, setVar ) => {
     
+        const errorDomMessage = document.getElementById('error-message-login')
+
         return axios({
             method: 'post',
             url: "http://localhost:3001/api/v1/user/login",
@@ -51,7 +55,7 @@ function SignInPage(){
             },
             data: userLogin
         }).then(result => {
-                // console.log(result)
+                console.log(result.data.status)
     
                 setVar(result.data.body.token)
                 dispatch(getTokenUser(result.data.body.token))
@@ -59,7 +63,6 @@ function SignInPage(){
                 window.localStorage.setItem('TOKEN', result.data.body.token)
 
                 if(result.data.body.token){
-                    console.log('TOKEN OK')
                     navigate('/user')
         
                 }else{
@@ -67,7 +70,17 @@ function SignInPage(){
                 }
     
             }
-        ).catch(error => { console.error(error); return Promise.reject(error); })
+        ).catch(error => {  
+                            console.error(error)
+
+                            if(error.response.data.status === 400){
+                                errorDomMessage.innerHTML = 'Invalid Fields'
+                            }if(error.response.data.status === 500){
+                                errorDomMessage.innerHTML = 'Internal Server Error'
+                            }
+                            
+                            return Promise.reject(error)
+                        })
     }
 
     
@@ -103,6 +116,9 @@ function SignInPage(){
                         onChange={(e) => setUserPassword(e.target.value)}
                     >
                     </input>
+                </div>
+                <div id='error-message-login'>
+
                 </div>
                 <div className="input-remember">
                     <input type="checkbox" id="remember-me"></input><label htmlFor="remember-me">Remember me</label>

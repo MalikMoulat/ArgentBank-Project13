@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import axios from "axios"
 
+import { useNavigate } from "react-router-dom"
+
 import './userpage.css'
 
 import Header from "../../components/Header/header"
@@ -15,14 +17,21 @@ function UserPage() {
 
     //Ajouter connecte redux
     const user = useSelector(state => state.user)
+    const navigate = useNavigate()
     // console.log('USER PAGE :',user)
 
     const dispatch = useDispatch()
     const token = user.token
     const tokenStorage = window.localStorage.getItem('TOKEN')
 
+    
+
     const [userData, setUserData] = useState()
     const [userToken, setUserToken] = useState()
+
+    if (tokenStorage === null){
+        navigate('/login')
+    }
 
     
 
@@ -35,11 +44,8 @@ function UserPage() {
                 Authorization: `Bearer ${token}`,
               },
         }).then(result => {
-                console.log(result.data.body)
-
                 dispatch(getUserData(result.data.body))
                 setVar(result.data.body)
-                
             }
         ).catch(error => { console.error(error); return Promise.reject(error); })
     }

@@ -23,7 +23,7 @@ function App() {
                     <Router>
                         <Routes>
                             <Route path='/' element={<HomePage />} />
-                            <Route path='/sing-in' element={<SignInPage />} />
+                            <Route path='/login' element={<SignInPage />} />
                             <Route path='/user' element={<UserPage />} />
                         </Routes>
                     </Router>

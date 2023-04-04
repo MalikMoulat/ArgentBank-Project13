@@ -6,21 +6,32 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { resetState } from '../../feature/reducer'
 import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 
 
 function Header() {
 
   const user = useSelector(state => state.user)
+  const tokenStorage = window.localStorage.getItem('TOKEN')
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  // console.log('header :', user)
 
   const signOut = () => {
     localStorage.clear()
-    navigate("/sing-in")
+    navigate("/")
     dispatch(resetState())
   }
+
+
+
+  useEffect(() => {
+
+    if (tokenStorage !== null){
+      navigate('/user')
+    }
+
+  }, [])
 
 
   const userConnected = (data) => {
@@ -35,7 +46,7 @@ function Header() {
               </React.Fragment>
     } 
     return  <React.Fragment>
-              <a className="main-nav-item" href="/sing-in">
+              <a className="main-nav-item" href="/login">
               <i className="fa fa-user-circle"></i>
                 Sign In
               </a>

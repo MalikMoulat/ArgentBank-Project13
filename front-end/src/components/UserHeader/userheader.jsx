@@ -11,7 +11,6 @@ import './userheader.css'
 function UserHeader(){
 
     const user = useSelector(state => state.user)
-    console.log(user)
 
     const dispatch = useDispatch()
 
