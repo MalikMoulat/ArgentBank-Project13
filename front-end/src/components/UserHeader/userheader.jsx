@@ -5,6 +5,8 @@ import axios from "axios"
 
 import { updateUserName } from "../../feature/reducer"
 
+import { closeModal, openModal } from "../../actions/actions"
+
 import React from "react"
 import './userheader.css'
 
@@ -36,7 +38,6 @@ function UserHeader(){
             "lastName": lastName
             }
 
-
             axios({
             method: 'put',
             url: "http://localhost:3001/api/v1/user/profile",
@@ -45,20 +46,14 @@ function UserHeader(){
             },
             data: newUserName
             }).then(result => {
-                console.log(result)
 
                 dispatch(updateUserName(newUserName))
     
             }
             ).catch(error => { console.error(error); return Promise.reject(error); })
 
-            closeModal()
-            
+            closeModal()  
     }
-
-
-
-
 
 
 

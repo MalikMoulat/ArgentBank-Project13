@@ -5,16 +5,10 @@ import { Provider } from "react-redux"
 import HomePage from "../../pages/Home/homepage"
 import SignInPage from "../../pages/Sign-in/signinpage"
 import UserPage from "../../pages/User/userpage"
-import login from '../../Api/api'
 
 import userReducers from "../../feature/reducer"
 import store from '../../store/store'
 
-
-
-
-// console.log(userReducers)
-// console.log('STORE :', store)
 
 function App() {
     return(
