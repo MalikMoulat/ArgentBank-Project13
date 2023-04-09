@@ -32,7 +32,6 @@ function UserHeader(){
     }
 
     const updateName = (e) => {
-
         e.preventDefault()
 
         const newUserName = {
