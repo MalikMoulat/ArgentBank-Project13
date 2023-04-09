@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { resetState } from '../../feature/reducer'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
+import { string } from 'prop-types'
 
 
 function Header() {
@@ -16,7 +17,9 @@ function Header() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-
+  /**
+   * fonction qui deconnecte un utilisateur
+   */
   const signOut = () => {
     localStorage.clear()
     navigate("/")
@@ -34,8 +37,14 @@ function Header() {
   }, [])
 
 
-  const userConnected = (data) => {
-    if (data.length > 3){
+  /**
+   * userConnected verifie que l'user et bien connecter en vérifiant l'existence de l'id de l'user
+   * dans le store redux
+   * @param {string} data - l'id de l'user recupérer dans le state redux
+   * @returns 
+   */
+  const userConnected = (userId) => {
+    if (userId !== null){
 
       return  <React.Fragment>
                   <i className="fa fa-user-circle"></i>

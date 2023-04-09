@@ -3,11 +3,11 @@ import { configureStore, createSlice } from "@reduxjs/toolkit"
 const userReducers = createSlice({
     name: "login",
     initialState: {
-        email: "",
-        firstName: "",
-        lastName: "",
-        id: "",
-        token: ""
+        email: null,
+        firstName: null,
+        lastName: null,
+        id: null,
+        token: null
     },
     reducers: {
         getUserData: (state, action) => {
@@ -24,11 +24,11 @@ const userReducers = createSlice({
             state.lastName = action.payload.lastName
         },
         resetState: (state) => {
-            state.email = ""
-            state.firstName = ""
-            state.lastName = ""
-            state.id = ""
-            state.token = ""
+            state.email = null
+            state.firstName = null
+            state.lastName = null
+            state.id = null
+            state.token = null
         }
 
     }

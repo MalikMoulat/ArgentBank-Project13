@@ -18,6 +18,8 @@ function UserHeader(){
 
     const [firstName, setfirstName] = useState()
     const [lastName, setLastName] = useState()
+
+    //Gere l'affichage de la modal de changement de nom et prénom
     const [updateNameForm, setUpdateNameForm] = useState(false)
 
 

@@ -25,6 +25,10 @@ function SignInPage(){
         'password': userPassword
         }
 
+    /**
+     * fonction qui gere l'évenement du boutton sign-in
+     * @param {*} e 
+     */
     const handleClick = (e) => {
         e.preventDefault()
         fetchToken(userLogin, setToken, dispatch, navigate)    

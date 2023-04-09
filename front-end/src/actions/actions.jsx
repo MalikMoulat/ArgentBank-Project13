@@ -1,9 +1,18 @@
 import axios from "axios"
 import { getTokenUser, getUserData } from "../feature/reducer"
-import { useNavigate } from "react-router-dom"
 
 
-
+/**
+ * La fonction fetchToken reucpère et stock le token quand l'utilisateur se connecte
+ * et stocke le token dans le localStorage et dans le state redux
+ * @function
+ * @async
+ * @param {object} userLogin - Identifiant et mot de passe de l'utilisateur
+ * @param {function} setVar - Variable qui contiendra le token (useSate()) 
+ * @param {function} dispatch - useDipatch()
+ * @param {function} navigate - useNavigate()
+ * @returns {promise}
+ */
 export const fetchToken = async ( userLogin, setVar, dispatch, navigate ) => {
     
     const errorDomMessage = document.getElementById('error-message-login')
@@ -44,7 +53,15 @@ export const fetchToken = async ( userLogin, setVar, dispatch, navigate ) => {
                     })
 }
 
-
+/**
+ * La fonction fetchData récupère les données de l'utilisateur une fois identifié
+ * @function
+ * @async
+ * @param {string} token - token de l'utilisateur
+ * @param {function} setVar - variable qui contiendra les données de l'utilisateur (useSate())
+ * @param {function} dispatch - useDispath()
+ * @returns {promise}
+ */
 export const fetchData = async ( token, setVar, dispatch ) => {
 
     return axios({
@@ -58,13 +75,4 @@ export const fetchData = async ( token, setVar, dispatch ) => {
             setVar(result.data.body)
         }
     ).catch(error => { console.error(error); return Promise.reject(error); })
-}
-
-
-export const openModal = ( setVar ) => {
-    setVar(true)
-}
-
-export const closeModal = ( setVar ) => {
-    setVar(false)
 }

@@ -16,15 +16,12 @@ import { getTokenUser } from "../../feature/reducer"
 
 function UserPage() {
 
-    const user = useSelector(state => state.user)
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
-    const token = user.token
     const tokenStorage = window.localStorage.getItem('TOKEN')
 
     const [userData, setUserData] = useState()
-    const [userToken, setUserToken] = useState()
 
     if (tokenStorage === null){
         navigate('/login')
