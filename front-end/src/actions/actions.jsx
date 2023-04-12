@@ -8,12 +8,11 @@ import { getTokenUser, getUserData } from "../feature/reducer"
  * @function
  * @async
  * @param {object} userLogin - Identifiant et mot de passe de l'utilisateur
- * @param {function} setVar - Variable qui contiendra le token (useSate()) 
  * @param {function} dispatch - useDipatch()
  * @param {function} navigate - useNavigate()
  * @returns {promise}
  */
-export const fetchToken = async ( userLogin, setVar, dispatch, navigate ) => {
+export const fetchToken = async ( userLogin, dispatch, navigate ) => {
     
     const errorDomMessage = document.getElementById('error-message-login')
 
@@ -25,11 +24,7 @@ export const fetchToken = async ( userLogin, setVar, dispatch, navigate ) => {
         },
         data: userLogin
     }).then(result => {
-            console.log(result.data.status)
-
-            setVar(result.data.body.token)
             dispatch(getTokenUser(result.data.body.token))
-
             window.localStorage.setItem('TOKEN', result.data.body.token)
 
             if(result.data.body.token){
@@ -58,11 +53,10 @@ export const fetchToken = async ( userLogin, setVar, dispatch, navigate ) => {
  * @function
  * @async
  * @param {string} token - token de l'utilisateur
- * @param {function} setVar - variable qui contiendra les données de l'utilisateur (useSate())
  * @param {function} dispatch - useDispath()
  * @returns {promise}
  */
-export const fetchData = async ( token, setVar, dispatch ) => {
+export const fetchData = async ( token, dispatch ) => {
 
     return axios({
         method: 'post',
@@ -72,7 +66,6 @@ export const fetchData = async ( token, setVar, dispatch ) => {
           },
     }).then(result => {
             dispatch(getUserData(result.data.body))
-            setVar(result.data.body)
         }
     ).catch(error => { console.error(error); return Promise.reject(error); })
 }

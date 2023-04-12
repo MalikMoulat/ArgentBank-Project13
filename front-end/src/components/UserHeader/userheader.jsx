@@ -1,11 +1,9 @@
-import { useSelector, connect, useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useState } from "react"
 import axios from "axios"
 
 
 import { updateUserName } from "../../feature/reducer"
-
-import { closeModal, openModal } from "../../actions/actions"
 
 import React from "react"
 import './userheader.css'
@@ -16,12 +14,11 @@ function UserHeader(){
 
     const dispatch = useDispatch()
 
-    const [firstName, setfirstName] = useState()
-    const [lastName, setLastName] = useState()
+    const [firstName, setfirstName] = useState(user.firstName)
+    const [lastName, setLastName] = useState(user.lastName)
 
     //Gere l'affichage de la modal de changement de nom et prénom
     const [updateNameForm, setUpdateNameForm] = useState(false)
-
 
     const openModal = () => {
         setUpdateNameForm(true)
@@ -38,6 +35,18 @@ function UserHeader(){
             "firstName": firstName,
             "lastName": lastName
             }
+            const errorDomMessage = document.getElementById('error-update-name')
+            const inputFirstName = document.getElementById('update_firstName').value
+            const inputLastName = document.getElementById('update_lastName').value
+
+            //Si le champ de nom ou prénom est trop court
+            if(inputFirstName.length < 1 || inputLastName < 1){
+                setTimeout(
+                    () => (errorDomMessage.innerHTML = "Invalid Fields"),
+                    1000
+                  )
+                return
+            }
 
             axios({
             method: 'put',
@@ -47,16 +56,20 @@ function UserHeader(){
             },
             data: newUserName
             }).then(result => {
-
                 dispatch(updateUserName(newUserName))
-    
             }
-            ).catch(error => { console.error(error); return Promise.reject(error); })
+            ).catch(error => { 
+                console.error(error)
 
+                if(error.response.data.status === 400){
+                    errorDomMessage.innerHTML = 'Invalid Fields'
+                }if(error.response.data.status === 500){
+                    errorDomMessage.innerHTML = 'Internal Server Error'
+                } 
+                return Promise.reject(error)
+            })
             closeModal()  
     }
-
-
 
     return updateNameForm ? (
         <React.Fragment>
@@ -89,6 +102,7 @@ function UserHeader(){
                             </input>
                         </div>
                     </div>
+                    <p id="error-update-name"></p>
                     <div className="wrapper-button-updtae-name">
                         <button className="button-updtae-name" onClick={updateName}
                                 >Save</button>

@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { fetchToken } from '../../actions/actions'
 
 import './signinpage.css'
@@ -14,11 +14,8 @@ function SignInPage(){
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [token, setToken] = useState('')
     const [userEmail, setUserEmail] = useState('')
     const [userPassword, setUserPassword] = useState('')
-
-    const user = useSelector(state => state.user)
 
     const userLogin = {
         'email': userEmail,
@@ -31,7 +28,7 @@ function SignInPage(){
      */
     const handleClick = (e) => {
         e.preventDefault()
-        fetchToken(userLogin, setToken, dispatch, navigate)    
+        fetchToken(userLogin, dispatch, navigate)    
     }
 
 

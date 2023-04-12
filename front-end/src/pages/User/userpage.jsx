@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import axios from "axios"
-
+import React, { useEffect } from "react"
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-
 import './userpage.css'
-
 import Header from "../../components/Header/header"
 import Footer from "../../components/Footer/footer"
 import UserHeader from "../../components/UserHeader/userheader"
@@ -17,18 +13,15 @@ import { getTokenUser } from "../../feature/reducer"
 function UserPage() {
 
     const navigate = useNavigate()
-
     const dispatch = useDispatch()
     const tokenStorage = window.localStorage.getItem('TOKEN')
-
-    const [userData, setUserData] = useState()
 
     if (tokenStorage === null){
         navigate('/login')
     }
 
     useEffect(() => {
-        fetchData(tokenStorage, setUserData, dispatch)
+        fetchData(tokenStorage, dispatch)
         dispatch(getTokenUser(tokenStorage))
     }, [])
 
