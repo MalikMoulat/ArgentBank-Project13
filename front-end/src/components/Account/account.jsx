@@ -1,6 +1,5 @@
 import React from "react"
 import './account.css'
-import PropTypes from "prop-types"
 
 function Account({ accountTitle, accountAmont, accountDescription }){
     return(
