@@ -35,48 +35,49 @@ function UserHeader(){
             "firstName": firstName,
             "lastName": lastName
             }
+            
+        const inputFirstName = document.getElementById('update_firstName').value
+        const inputLastName = document.getElementById('update_lastName').value
+
+        //Vérification de la longueur des champs de nom et de prénom
+        if(inputFirstName.length < 1 || inputLastName < 1){
             const errorDomMessage = document.getElementById('error-update-name')
-            const inputFirstName = document.getElementById('update_firstName').value
-            const inputLastName = document.getElementById('update_lastName').value
+            errorDomMessage.innerHTML = "Invalid Fields"
+            setTimeout(() => (errorDomMessage.innerHTML = "Invalid Fields"),1000)
+            return
+        }
 
-            //Si le champ de nom ou prénom est trop court
-            if(inputFirstName.length < 1 || inputLastName < 1){
-                setTimeout(
-                    () => (errorDomMessage.innerHTML = "Invalid Fields"),
-                    1000
-                  )
-                return
+        const errorDomMessage = document.getElementById('error-update-name')
+
+        try {
+            axios.put(
+              "http://localhost:3001/api/v1/user/profile",
+              newUserName,
+              {
+                headers: {
+                  Authorization: `Bearer ${user.token}`,
+                },
+              }
+            )
+            dispatch(updateUserName(newUserName));
+          } catch (error) {
+            console.error(error);
+            if (error.response.data.status === 400) {
+                errorDomMessage.innerHTML = "InvalidFields"
+            } else if (error.response.data.status === 500) {
+                errorDomMessage.innerHTML = "Internal Server Error"
             }
-
-            axios({
-            method: 'put',
-            url: "http://localhost:3001/api/v1/user/profile",
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-            },
-            data: newUserName
-            }).then(result => {
-                dispatch(updateUserName(newUserName))
-            }
-            ).catch(error => { 
-                console.error(error)
-
-                if(error.response.data.status === 400){
-                    errorDomMessage.innerHTML = 'Invalid Fields'
-                }if(error.response.data.status === 500){
-                    errorDomMessage.innerHTML = 'Internal Server Error'
-                } 
-                return Promise.reject(error)
-            })
-            closeModal()  
-    }
+            return Promise.reject(error);
+          }
+          closeModal()
+        }
 
     return updateNameForm ? (
         <React.Fragment>
             <div id="update_name_modal" className="update_name_modal">
                 <h1>Welcome back</h1>
                 <form>
-                    <div className="input-wrapper-name">
+                    <div className="input-wrapper-name first-name">
                         <div className="input-wrapper">
                             <label htmlFor="update_firstName" ></label>
                             <input 
@@ -89,7 +90,7 @@ function UserHeader(){
                             >    
                             </input>
                         </div>
-                        <div className="input-wrapper">
+                        <div className="input-wrapper last-name">
                             <label htmlFor="update_lastName"></label>
                             <input 
                                 type="text" 
