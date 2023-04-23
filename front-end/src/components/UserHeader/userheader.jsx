@@ -9,14 +9,10 @@ import React from "react"
 import './userheader.css'
 
 function UserHeader(){
-
     const user = useSelector(state => state.user)
-
     const dispatch = useDispatch()
-
     const [firstName, setfirstName] = useState(user.firstName)
     const [lastName, setLastName] = useState(user.lastName)
-
     //Gere l'affichage de la modal de changement de nom et prénom
     const [updateNameForm, setUpdateNameForm] = useState(false)
 
@@ -35,10 +31,8 @@ function UserHeader(){
             "firstName": firstName,
             "lastName": lastName
             }
-            
         const inputFirstName = document.getElementById('update_firstName').value
         const inputLastName = document.getElementById('update_lastName').value
-
         //Vérification de la longueur des champs de nom et de prénom
         if(inputFirstName.length < 1 || inputLastName < 1){
             const errorDomMessage = document.getElementById('error-update-name')
@@ -46,7 +40,7 @@ function UserHeader(){
             setTimeout(() => (errorDomMessage.innerHTML = "Invalid Fields"),1000)
             return
         }
-
+        
         const errorDomMessage = document.getElementById('error-update-name')
 
         try {
